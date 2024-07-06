@@ -9,7 +9,7 @@ function Navbar({ data, setClick }) {
       <div className="link flex items-center justify-end h-full w-[85%]">
         <button
           onClick={()=>setClick(!data)}
-          className="shadow-md btn text-xs transition-colors font-semibold text-zinc-200 hover:text-zinc-800 hover:bg-zinc-200 rounded-lg py-2 px-4 outline-none border-zinc-200 border-[1px]"
+          className="shadow-md btn text-xs transition-colors font-semibold text-zinc-200 hover:text-zinc-100 hover:bg-zinc-200zz rounded-lg py-2 px-4 outline-none border-zinc-200 border-[1px]"
         >
           Add new
         </button>

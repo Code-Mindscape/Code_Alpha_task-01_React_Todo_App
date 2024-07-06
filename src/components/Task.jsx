@@ -3,7 +3,7 @@ import { MdDelete } from "react-icons/md";
 
 function Task({item, addTask, tasklist}) {
   return (
-    <div key={item.i} className="task flex items-center justify-center w-full min-h-[70px] bg-zinc-700 rounded-lg ">
+    <div key={item.i} className="task flex items-center border border-zinc-100/20 justify-center w-full min-h-[70px] bg-zinc-600/50 rounded-lg ">
           <div className="checkBox w-[10%] h-[70px] flex items-center justify-center">
           <input type="checkbox" className="checkbox" />
           </div>
