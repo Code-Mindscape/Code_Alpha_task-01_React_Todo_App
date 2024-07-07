@@ -1,31 +1,47 @@
-import React, { useRef } from "react";
-let nextindx = 0;
+import { Flex, Radio } from "@radix-ui/themes/dist/cjs/index.js";
+import React, { useRef, useEffect } from "react";
 
-function Popup({ tasklist, addT, data, setClick}) {
+let nextIndex = 0;
+
+function Popup({ tasklist, addT, data, setClick }) {
   const popupRef = useRef(null);
+
   function showPopUp() {
     setClick(!data);
   }
-  function addTask() {
-    let titleBox = document.getElementById("task_title");
-    let descBox = document.getElementById("task_desc");
 
-    if(titleBox.value && descBox.value){
+  function addTask() {
+    const titleBox = document.getElementById("task_title");
+    const descBox = document.getElementById("task_desc");
+    const priorityBoxes = document.getElementsByName("priority");
+
+    let selectedPriority;
+    for (let i = 0; i < priorityBoxes.length; i++) {
+      if (priorityBoxes[i].checked) {
+        selectedPriority = priorityBoxes[i].id;
+        break;
+      }
+    }
+
+    if (titleBox.value && descBox.value && selectedPriority) {
       addT([
         ...tasklist,
-        {title: titleBox.value, desc: descBox.value, i: nextindx++}
-    ])
-    titleBox.value = "";
-    descBox.value = "";
-    setClick(!data);
+        { title: titleBox.value,
+          desc: descBox.value, 
+          priority: selectedPriority,
+          isCompleted: false,
+          id: nextIndex++ }
+      ]);
+      titleBox.value = "";
+      descBox.value = "";
+      setClick(!data);
+    }
   }
-  }
+
   return (
     <div
       ref={popupRef}
-      className={`popup ${
-        data ? "animate_popup" : ""
-      } absolute rounded-2xl h-[290px] border-[1px] border-zinc-200/15 w-[560px] bg-zinc-950/50`}
+      className={`popup ${data ? "animate_popup" : ""} absolute rounded-2xl h-[290px] border-[1px] border-zinc-200/15 w-[560px] bg-zinc-950/50`}
     >
       <div className="popWrapper w-full h-full flex items-center justify-center flex-col">
         <div className="titleBox flex items-center justify-center w-full h-[60px] border-b-[1px] border-zinc-200/15 px-1">
@@ -38,14 +54,27 @@ function Popup({ tasklist, addT, data, setClick}) {
             id="task_title"
             className="text-zinc-200 px-3 w-[90%] bg-transparent border-[1.5px] outline-none focus-within:border-zinc-200/50 rounded-md border-zinc-200/15 h-9"
             type="text"
-            placeholder={"Add Title"}
+            placeholder="Add Title"
           />
           <input
             id="task_desc"
             className="text-zinc-200 px-3 w-[90%] bg-transparent border-[1.5px] outline-none focus-within:border-zinc-200/50 rounded-md border-zinc-200/15 h-9"
             type="text"
-            placeholder={"Add description"}
+            placeholder="Add Description"
           />
+        </div>
+        <div className="priority_Box py-3 flex justify-start items-center w-[90%]">
+          <Flex as="span" gap="3">
+            <label htmlFor="high" className="text-zinc-100 flex items-center justify-center gap-1">
+              <Radio color="crimson" id="high" name="priority" />High
+            </label>
+            <label htmlFor="normal" className="text-zinc-100 flex items-center justify-center gap-1">
+              <Radio color="orange" id="normal" name="priority" />Normal
+            </label>
+            <label htmlFor="low" className="text-zinc-100 flex items-center justify-center gap-1">
+              <Radio color="cyan" id="low" name="priority" />Low
+            </label>
+          </Flex>
         </div>
         <div className="btn flex items-center gap-3 justify-end w-full h-[50px] px-6 pb-6">
           <button

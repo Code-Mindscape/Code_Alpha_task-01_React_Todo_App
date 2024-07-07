@@ -14,11 +14,12 @@ function Main({ data, setClick }) {
 
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
+  const [checkValue, setheckValue] = useState(false);
 
   return (
     <div className='pt-20 pb-3 main relative flex items-start justify-center w-full h-full'>
       <Popup addT={setTasklist} tasklist={tasklist} data={data} setClick={setClick} />
-      <Tasks addTask={setTasklist} tasklist={tasklist} />
+      <Tasks checkVal={checkValue} setCheckVal={setheckValue} addTask={setTasklist} tasklist={tasklist} />
     </div>
   );
 }
