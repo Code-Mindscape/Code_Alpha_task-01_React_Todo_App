@@ -4,15 +4,21 @@ import { MdDelete } from "react-icons/md";
 
 
 function Task({item, addTask, tasklist, checkValue, setCheckValue}) {
-  const handleCheckBox = ( taskli, id ) =>{
-    taskli.filter((task) =>(
-      task === id
-    ))
-  }
+  const handleCheckBox = ( id ) =>{
+    addTask(
+      tasklist.map(task => {
+        if (task.id === id) {
+          return { ...task, isCompleted: !task.isCompleted };
+        }
+        return task;
+      })
+    )}
+
+  console.log(tasklist)
   return (
-    <div key={item.i} className={`task flex items-center border ${item.priority=== "high"? "border-[#e93d82]" : "" } ${item.priority=== "normal"? "border-[#F76B15]" : "" }  ${item.priority=== "low"? "border-[#00A2C7]" : "" } justify-center w-full min-h-[70px] border-t-0 border-l-0 border-b-0 bg-zinc-600/50 rounded-lg border-r-8 `}>
+    <div key={item.i} className={`task flex items-center border ${item.priority=== "high"? "border-[#e93d82]" : "" } ${item.priority=== "normal"? "border-[#F76B15]" : "" }  ${item.priority=== "low"? "border-[#00A2C7]" : "" } justify-center w-full min-h-[70px] ${item.isCompleted? "bg-green-600/60 border-green-400/60 border-t-1 ": "bg-zinc-600/50 border-r-8 border-t-0 border-l-0 border-b-0"} rounded-lg `}>
           <div className="checkBox w-[10%] h-[70px] flex items-center justify-center">
-          <Checkbox color="gray" onCheckedChange={handleCheckBox(tasklist, item.i)} checked={checkValue} />
+          <Checkbox color="gray" onCheckedChange={()=>handleCheckBox(item.id)} checked={item.isCompleted} />
           </div>
           <div className="textBox w-[80%] h-[70px] flex flex-col items-start justify-center">
               <div className="title text-lg font-bold flex text-zinc-300 items-end  w-full h-1/2  px-3">{item.title}</div>

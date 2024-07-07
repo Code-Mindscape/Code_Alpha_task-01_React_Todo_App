@@ -1,7 +1,7 @@
 import { Flex, Radio } from "@radix-ui/themes/dist/cjs/index.js";
 import React, { useRef, useEffect } from "react";
 
-let nextIndex = 0;
+let nextIndex = 1;
 
 function Popup({ tasklist, addT, data, setClick }) {
   const popupRef = useRef(null);
@@ -26,7 +26,8 @@ function Popup({ tasklist, addT, data, setClick }) {
     if (titleBox.value && descBox.value && selectedPriority) {
       addT([
         ...tasklist,
-        { title: titleBox.value,
+        { 
+          title: titleBox.value,
           desc: descBox.value, 
           priority: selectedPriority,
           isCompleted: false,
